@@ -3,10 +3,11 @@ import data_structures.*;
 public class P1Driver {
     private LinearListADT<Integer> list;
     
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public P1Driver() {
         list = new ArrayLinearList(10);
         System.out.println("Created Array");
-        //runTests();
+        runTests();
         }
         
     private void runTests() {
@@ -15,6 +16,7 @@ public class P1Driver {
         System.out.println("Should now print 10 .. 1");
         for(Integer i : list)
             System.out.println(i);
+        /*
         for(int i=1; i <= 10; i++) 
             if(list.removeFirst() == null)
                 throw new RuntimeException("ERROR with removeFirst");
@@ -74,7 +76,7 @@ public class P1Driver {
                 System.out.println("removed " + tmp);
            }
         for(Integer i : list)
-            System.out.println(i);           
+            System.out.println(i); */
        }
         
     public static void main(String [] args) {
