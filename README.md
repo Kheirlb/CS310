@@ -3,12 +3,19 @@ My personal cloud of class notes and programs for Data Structures
 
 Program Review followed by Lectures
 
-## Program Review
-- No Programs Yet.
+## PROGRAMS:
+### Program 1
+prog1 = Mostly Completed
+- add ends()
+- modification counter, piazza "Testing concurrentModification"
+- "abort" for addFirst()
+- review comments in interface.java filename
+- create any additional driver files
 
-Most present lecture at the top.
+## LECTURES
+Lectures below. Most present lecture at the top. Many lectures taken on Notability and will not be included into the README
 
-## Lecture 1/24/19
+### Lecture 1/24/19
 Brackets the way you want.
 Complexity:
   Runtime is important, but not what we are looking at.
