@@ -56,7 +56,8 @@ public class P1Tester {
         if(list.peekFirst() != null) print("ERROR in peekFirst");
         if(list.peekLast() != null) print("ERROR in peekLast");
         if(list.size() != 0) print("ERROR, size() returns incorrect value");             
-                                           
+        System.out.println("P1Tester.java RUNS!!!!!!!!");           
+        System.out.println("NO ERRORS!!!!!!!!");                                 
        }
        
     private void print(String s) {

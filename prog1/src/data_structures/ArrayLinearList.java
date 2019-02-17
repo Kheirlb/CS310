@@ -1,11 +1,21 @@
+  /**
+   *  Program 1
+   *  ArrayLinearList uses interface LinearListADT to create a circular array
+   *  with no extra time.
+   *  CS310-01
+   *  2/16/2019
+   *  @author  Karl Parks cssc1506
+   */
+
 package data_structures;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException; 
+import java.util.ConcurrentModificationException;
 
-public class ArrayLinearList<E> implements LinearListADT<E>, Iterator<E>{
+public class ArrayLinearList<E> implements LinearListADT<E>, Iterable<E>{
 	private E[] listA;
-	private int size, frontI, rearI, lastI, max, iterI;
+	private int size, frontI, rearI, lastI, max;
 	public ArrayLinearList() {
 		this(DEFAULT_MAX_CAPACITY);
 	}
@@ -14,34 +24,22 @@ public class ArrayLinearList<E> implements LinearListADT<E>, Iterator<E>{
 	public ArrayLinearList(int i) {
 		max = i;
 		lastI = max - 1;
-		frontI = -1;
+		frontI = 0;
 		rearI = 0;
 		listA = (E []) new Object[max];
 		size = 0;
 	}
-
+	
 	public void ends() {
 		// TODO Auto-generated method stub
 		
-	}
-
-	public void setSize() {
-		if (rearI > frontI) {
-			size = rearI - (frontI - 1);
-		}
-		else if (rearI == frontI) {
-			size = 1;
-		}
-		else {
-			size = (max - frontI) + (rearI + 1);
-		}
 	}
 	
 	public boolean addFirst(E obj) {
 		if (size >= max) {
 			return false;
 		}
-		if (frontI < 0) {
+		if (size == 0) {
 			frontI = 0; //empty matrix check
 			rearI = 0;
 		}
@@ -64,7 +62,7 @@ public class ArrayLinearList<E> implements LinearListADT<E>, Iterator<E>{
 		}
         //System.out.println(frontI);
 		listA[frontI] = obj;
-		setSize();
+		size++;
         //System.out.println(size);
 		return true;
 	}
@@ -73,7 +71,7 @@ public class ArrayLinearList<E> implements LinearListADT<E>, Iterator<E>{
 		if (size >= max) {
 			return false;
 		}
-		if (frontI < 0) {  //empty matrix check
+		if (size == 0) {  //empty matrix check
 			frontI = 0;
 			rearI = 0;
 		}
@@ -93,121 +91,183 @@ public class ArrayLinearList<E> implements LinearListADT<E>, Iterator<E>{
 		}
         //System.out.println(frontI);
 		listA[rearI] = obj;
-		setSize();
+		size++;
         //System.out.println(size);
 		return true;
 	}
 
 	@Override
 	public E removeFirst() {
-		// TODO Auto-generated method stub
-		return null;
+		E temp = listA[frontI];
+		listA[frontI] = null;
+		if (frontI == max - 1) {
+			frontI = 0;
+		}
+		else {
+			frontI += 1;
+		}
+		size -= 1;
+		if (size == 0) {
+			frontI = 0;
+			rearI = 0;
+		}
+		return temp;
 	}
 
 	@Override
 	public E removeLast() {
-		// TODO Auto-generated method stub
-		return null;
+		E temp = listA[rearI];
+		listA[rearI] = null;
+		if (rearI == 0) {
+			rearI = max - 1;
+		}
+		else {
+			rearI -= 1;
+		}
+		size -= 1;
+		if (size == 0) {
+			frontI = 0;
+			rearI = 0;
+		}
+		return temp;
 	}
-
+	
 	@Override
 	public E remove(E obj) {
-		// TODO Auto-generated method stub
+		int count = 0;
+		int count2 = 0;
+		for (int i = frontI; count < size; i++) {
+			if (i == max) {
+				i = 0;
+			}
+			//System.out.println("Searching at index: " + i);
+			if (listA[i] == obj) {
+//				System.out.println("i: " + i);
+//				System.out.println("count + count2: " + (count + count2));
+//				System.out.println("size - 1: " + size);
+				if (i == rearI) {
+					listA[i] = null;
+					if (rearI == 0) {
+						rearI = max - 1;
+					}
+					else {
+						rearI -= 1;
+					}
+					size -= 1;
+					return obj;
+				}
+				for (int j = i; count + count2 < size - 1; j++) {
+//					System.out.println("j: " + j);
+//					System.out.println("count + count2: " + (count + count2));
+					if (j == max - 1) {
+						//System.out.println("list:[" + j + "] will be replaced by list[" + 0 + "]");
+						listA[j] = listA[0];
+						listA[0] = null;
+						j = -1;
+					}
+					else {
+						//System.out.println("list:[" + j + "] will be replaced by list[" + (j+1) + "]");
+						listA[j] = listA[j + 1];
+						listA[j+1] = null;
+					}
+					count2++;
+				}
+				if (rearI == 0) {
+					rearI = max - 1;
+				}
+				else {
+					rearI -= 1;
+				}
+				size -= 1;
+				return obj;
+			}
+			count++;
+		}
 		return null;
 	}
 
 	@Override
 	public E peekFirst() {
-		// TODO Auto-generated method stub
-		return null;
+		return listA[frontI];
 	}
 
 	@Override
 	public E peekLast() {
-		// TODO Auto-generated method stub
-		return null;
+		return listA[rearI];
 	}
 
 	@Override
 	public boolean contains(E obj) {
-		// TODO Auto-generated method stub
-		return false;
+		return obj == find(obj);
 	}
 
 	@Override
 	public E find(E obj) {
-		// TODO Auto-generated method stub
+		int count = 0;
+		for (int i = frontI; count < size; i++) {
+			if (i == max) {
+				i = 0;
+			}
+			if (listA[i] == obj) {
+				return listA[i];
+			}
+			count++;
+		}
 		return null;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		size = 0;
+		frontI = 0;
+		rearI = 0;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return size == 0;
 	}
 
 	@Override
 	public boolean isFull() {
-		// TODO Auto-generated method stub
-		return false;
+		return size == max;
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+//		System.out.println("frontI: " + frontI);
+//		System.out.println("rearI: " + rearI);
+		return size;
 	}
-
+	
 	//@Override
 	public Iterator<E> iterator() {
-		iterI = frontI;
-		System.out.println("frontI: " + frontI);
-		System.out.println("rearI: " + rearI);
-		return (Iterator<E>) this;
+		return new IteratorHelper();
 	}
 	
-	public boolean hasNext() {
-		if (iterI <= rearI) {
-			//System.out.println("hasNext because iterI <= rearI");
-			return true; 
+	private class IteratorHelper implements Iterator<E> {
+		private int index, count;
+		public IteratorHelper() {
+			index = frontI;
+			count = 0;
 		}
-		else if (rearI == iterI) {
-			return false;
+		
+		public boolean hasNext() {
+			return count != size;
 		}
-		else if (rearI < iterI && iterI < max) {
-			//System.out.println("hasNext because rearI < iterI && frontI < iterI");
-			return true; 
-		}
-		else {
-			//System.out.println("Does NOT have Next");
-			return false;
-		}
-	}
-
-	public E next() {
-		if (!hasNext()) {
-			throw new NoSuchElementException();
-		}
-		if (iterI < max) {
-			return listA[iterI++];
-		}
-		else if (iterI == max) {
-			iterI = 0;
-			return listA[iterI];
-		}
-		else {
-			return listA[iterI++];
-		}
-	}
 	
-	public void remove() {
-		throw new UnsupportedOperationException();
+		public E next() {
+			E temp = listA[index++];
+			if (index == max) {
+				index = 0;
+			}
+			count++;
+			return temp;
+		}
+		
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 }

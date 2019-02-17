@@ -21,4 +21,5 @@ public interface LinearListADT<E> extends Iterable<E> {
 	public boolean isFull();
 	public int size();
 	public Iterator<E> iterator();
+
 }
