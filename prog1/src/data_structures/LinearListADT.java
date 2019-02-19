@@ -1,11 +1,11 @@
 package data_structures;
 
 import java.util.Iterator; 
-//import java.util.NoSuchElementException; 
+import java.util.NoSuchElementException; 
 
+@SuppressWarnings("unused")
 public interface LinearListADT<E> extends Iterable<E> { 
 	public static final int DEFAULT_MAX_CAPACITY = 100;
-	/* Outputs “Front: indexFront Rear: indexRear”      */
 	public void ends();
 	public boolean addFirst(E obj);
 	public boolean addLast(E obj);

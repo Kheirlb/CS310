@@ -55,7 +55,10 @@ public class P1Tester {
             if(list.remove(i) != i) print("ERROR in remove");
         if(list.peekFirst() != null) print("ERROR in peekFirst");
         if(list.peekLast() != null) print("ERROR in peekLast");
-        if(list.size() != 0) print("ERROR, size() returns incorrect value");             
+        if(list.size() != 0) print("ERROR, size() returns incorrect value");   
+        list.ends(); //technically empty
+        list.addLast(3);
+        list.ends();
         System.out.println("P1Tester.java RUNS!!!!!!!!");           
         System.out.println("NO ERRORS!!!!!!!!");                                 
        }
