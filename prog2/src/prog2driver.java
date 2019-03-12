@@ -37,7 +37,7 @@ public class prog2driver {
         // addFirst/removeFirst check     
         for(int i=0; i < STRUCTURE_SIZE; i++) { // add elements
             list.addFirst(array[i]);
-            System.out.println("Hello Karl");
+            //System.out.println("Hello Karl");
         }
         System.out.println("Size: " + list.size());
         listS.addFirst("B");
@@ -51,9 +51,33 @@ public class prog2driver {
         listS.removeFirst();
         listS.removeFirst();
         listS.removeFirst();
+        System.out.println("Size: " + listS.size());
+        listS.removeFirst();
         listS.removeFirst();
         System.out.println("Size: " + listS.size());
-        //list.printList();
+        listS.addFirst("B");
+        listS.addFirst("A");
+        listS.addLast("C");
+        listS.addLast("D");
+        listS.addFirst("First");
+        listS.addLast("Last");
+        listS.removeLast();
+        listS.removeLast();
+        listS.removeLast();
+        listS.removeLast();
+        listS.removeLast();
+        listS.addFirst("A");
+        listS.removeLast();
+        listS.removeLast();
+        listS.addFirst("A");
+        listS.addLast("B");
+        listS.addLast("C");
+        listS.removeFirst();
+        listS.addLast("D");
+        listS.removeLast();
+        String letter = "B";
+        System.out.println("Removed String: " + listS.remove(letter));
+        System.out.println("Size: " + listS.size());
         /*
         // remove and check the order
         for(int i=STRUCTURE_SIZE-1; i >= 0 ; i--)

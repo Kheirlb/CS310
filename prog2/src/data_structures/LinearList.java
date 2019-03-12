@@ -55,10 +55,12 @@ public class LinearList<E extends Comparable<E>> implements LinearListADT<E> {
 
 	@Override
 	public E removeFirst() {
+		//System.out.println("error");
 		if (currentSize != 0) {
 			E tmp = head.data;
 			head = head.next;
-			head.prev = null;
+			if (currentSize != 1)
+				head.prev = null;
 			currentSize--;
 			return tmp;
 		}
@@ -67,13 +69,41 @@ public class LinearList<E extends Comparable<E>> implements LinearListADT<E> {
 
 	@Override
 	public E removeLast() {
-		// TODO Auto-generated method stub
+		//System.out.println("error");
+		if (currentSize != 0) {
+			E tmp = tail.data;
+			tail = tail.prev;
+			if (currentSize != 1)
+				tail.next = null;
+			currentSize--;
+			return tmp;
+		}
 		return null;
 	}
 
 	@Override
 	public E remove(E obj) {
-		// TODO Auto-generated method stub
+		Node<E> tmp = head;
+		Node<E> tmpDesired = null;
+		for (int i = 0; i < currentSize; i++) {
+			if (tmp.data == obj) {
+				tmpDesired = tmp;
+				System.out.println("Found Node to Delete");
+				if (i == 0) {
+					removeFirst();
+				}
+				else if (i == currentSize - 1) {
+					removeLast();
+				}
+				else {
+					tmpDesired.prev.next = tmpDesired.next;
+					tmpDesired.next.prev = tmpDesired.prev;
+					currentSize--;
+				}
+				return obj;
+			}
+			tmp = tmp.next;
+		}
 		return null;
 	}
 
