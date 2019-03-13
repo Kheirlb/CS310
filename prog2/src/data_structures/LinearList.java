@@ -1,12 +1,14 @@
 package data_structures;
 
 import java.util.Iterator;
+import java.util.ConcurrentModificationException;
 
 public class LinearList<E extends Comparable<E>> implements LinearListADT<E> {
 	private Node<E> head;
 	private Node<E> tail;
-	private int currentSize;
+	private int currentSize, modCount;
 	
+	@SuppressWarnings("hiding")
 	class Node<E> {
 		E data;
 		Node<E> next;
@@ -21,6 +23,7 @@ public class LinearList<E extends Comparable<E>> implements LinearListADT<E> {
 	public void LinkedList() {
 		head = null;
 		tail = null;
+		modCount = 0; //modification counter
 		currentSize = 0;
 	}
 	
@@ -36,6 +39,7 @@ public class LinearList<E extends Comparable<E>> implements LinearListADT<E> {
 			tail = head;
 		}
 		currentSize++;
+		modCount++;
 		return true;
 	}
 
@@ -50,18 +54,19 @@ public class LinearList<E extends Comparable<E>> implements LinearListADT<E> {
 		newNode.prev = tail;
 		tail = newNode;
 		currentSize++;
+		modCount++;
 		return true;
 	}
 
 	@Override
 	public E removeFirst() {
-		//System.out.println("error");
 		if (currentSize != 0) {
 			E tmp = head.data;
 			head = head.next;
 			if (currentSize != 1)
 				head.prev = null;
 			currentSize--;
+			modCount++;
 			return tmp;
 		}
 		return null;
@@ -69,13 +74,13 @@ public class LinearList<E extends Comparable<E>> implements LinearListADT<E> {
 
 	@Override
 	public E removeLast() {
-		//System.out.println("error");
 		if (currentSize != 0) {
 			E tmp = tail.data;
 			tail = tail.prev;
 			if (currentSize != 1)
 				tail.next = null;
 			currentSize--;
+			modCount++;
 			return tmp;
 		}
 		return null;
@@ -86,9 +91,11 @@ public class LinearList<E extends Comparable<E>> implements LinearListADT<E> {
 		Node<E> tmp = head;
 		Node<E> tmpDesired = null;
 		for (int i = 0; i < currentSize; i++) {
-			if (tmp.data == obj) {
+//			System.out.println(tmp.data);
+//			System.out.println(obj);
+			if (tmp.data.compareTo(obj) == 0) {
 				tmpDesired = tmp;
-				System.out.println("Found Node to Delete");
+				//System.out.println("Found Node to Delete");
 				if (i == 0) {
 					removeFirst();
 				}
@@ -99,6 +106,7 @@ public class LinearList<E extends Comparable<E>> implements LinearListADT<E> {
 					tmpDesired.prev.next = tmpDesired.next;
 					tmpDesired.next.prev = tmpDesired.prev;
 					currentSize--;
+					modCount++;
 				}
 				return obj;
 			}
@@ -109,66 +117,94 @@ public class LinearList<E extends Comparable<E>> implements LinearListADT<E> {
 
 	@Override
 	public E peekFirst() {
-		// TODO Auto-generated method stub
-		return null;
+		return (currentSize == 0)? null : head.data;
 	}
 
 	@Override
 	public E peekLast() {
-		// TODO Auto-generated method stub
-		return null;
+		return (currentSize == 0)? null : tail.data;
 	}
 
 	@Override
 	public boolean contains(E obj) {
-		// TODO Auto-generated method stub
-		return false;
+		return obj == find(obj); //use find which will return null if no desired value found
 	}
 
 	@Override
 	public E find(E obj) {
-		// TODO Auto-generated method stub
+		Node<E> tmp = head;
+		for (int i = 0; i < currentSize; i++) {
+			if (tmp.data == obj) {
+				return obj;
+			}
+			tmp = tmp.next;
+		}
 		return null;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		head = null;
+		tail = null;
+		currentSize = 0;
+		modCount++;		
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return (currentSize == 0);
 	}
 
 	@Override
 	public boolean isFull() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public int size() {
-		printList();
+		//printList();
 		return currentSize;
 	}
 
 	public void printList() {
 		Node<E> tmp = head;
 		System.out.println("--- Printing List ---");
+		System.out.println("Size: " + currentSize);
 		for (int i = 0; i < currentSize; i++) {
-			//System.out.println("Confused, i: " +  i);
 			System.out.println(tmp.data);
 			tmp = tmp.next;
 		}
 	}
 	
-	@Override
-	public Iterator<E> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+	//@Override
+	public Iterator<E> iterator() { //iterator helper method for enhanced for-loop
+		return new IteratorHelper();
 	}
-
+		
+	private class IteratorHelper implements Iterator<E> {
+		private int count, expectedMod;
+		Node<E> tmp = head;
+		public IteratorHelper() {
+			expectedMod = modCount; //checks for modifications
+			count = 0;
+		}
+		
+		public boolean hasNext() {
+			return count != currentSize;
+		}
+	
+		public E next() {
+			if (modCount != expectedMod) { //modification error throw here
+		        throw new ConcurrentModificationException("Cannot modify list during enhanced for-loop");
+			}
+			E tempData = tmp.data;
+			tmp = tmp.next;
+			count++;
+			return tempData;
+		}
+		
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+	}
 }

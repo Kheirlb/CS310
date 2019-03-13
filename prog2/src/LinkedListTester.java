@@ -9,16 +9,14 @@
 import java.util.Iterator;
 import data_structures.*;
 
-public class prog2driver {
+public class LinkedListTester {
     private LinearListADT<Integer> list;
-    private LinearListADT<String> listS;
     private int [] array;
     private int [] scrambled_array;
-    private static final int STRUCTURE_SIZE = 10;//50000;
+    private static final int STRUCTURE_SIZE = 50000;
     
-    public prog2driver() {
+    public LinkedListTester() {
         list = new LinearList<Integer>();
-        listS = new LinearList<String>();
         array = new int[STRUCTURE_SIZE];
         scrambled_array = new int[STRUCTURE_SIZE];                 
         for(int i=0; i < STRUCTURE_SIZE; i++) 
@@ -34,78 +32,9 @@ public class prog2driver {
         }
             
     public void runTests() {
-    	System.out.println("Running Tests");
         // addFirst/removeFirst check     
-        for(int i=0; i < STRUCTURE_SIZE; i++) { // add elements
+        for(int i=0; i < STRUCTURE_SIZE; i++) // add elements
             list.addFirst(array[i]);
-            //System.out.println("Hello Karl");
-        }
-        
-        //System.out.println("Size: " + list.size());
-        listS.addFirst("B");
-        listS.addFirst("A");
-        listS.addLast("C");
-        listS.addLast("D");
-        listS.addFirst("First");
-        listS.addLast("Last");
-        listS.removeFirst();
-        listS.removeFirst();
-        listS.removeFirst();
-        listS.removeFirst();
-        listS.removeFirst();
-        //System.out.println("Size: " + listS.size());
-        listS.removeFirst();
-        listS.removeFirst();
-        ///System.out.println("Size: " + listS.size());
-        listS.addFirst("B");
-        listS.addFirst("A");
-        listS.addLast("C");
-        listS.addLast("D");
-        listS.addFirst("First:1");
-        listS.addLast("Last");
-//        listS.removeLast();
-//        listS.removeLast();
-//        listS.removeLast();
-//        listS.removeLast();
-//        listS.removeLast();
-//        listS.addFirst("A");
-//        listS.removeLast();
-//        listS.removeLast();
-//        listS.addFirst("A");
-//        listS.addLast("B");
-//        listS.addLast("C");
-//        listS.removeFirst();
-//        listS.addLast("D");
-//        listS.removeLast();
-        System.out.println("Size: " + listS.size());
-        for(String i : listS)
-          System.out.println(i);
-        String letter = "First:1";
-        System.out.println("Removed String: " + listS.remove(letter));
-        System.out.println("Size: " + listS.size());
-        for(String i : listS)
-            System.out.println(i);
-//        listS.removeFirst();
-//        System.out.println("Peek First: " + listS.peekFirst());
-        //System.out.println("Size: " + listS.size());
-        
-       // System.out.println("Contains: " + listS.contains("T")); 
-        listS.clear();
-        //System.out.println("Empty?: " + listS.isEmpty()); 
-        //System.out.println("Full?: " + listS.isFull()); 
-
-        //System.out.println("Size: " + listS.size());
-        listS.addFirst("B");
-        listS.addFirst("A");
-        listS.addLast("C");
-        listS.addLast("D");
-        listS.addFirst("First");
-        listS.addLast("Last");
-//        for(String i : listS)
-//            listS.remove(i);
-        //System.out.println("Size: " + listS.size());
-
-        /*
         // remove and check the order
         for(int i=STRUCTURE_SIZE-1; i >= 0 ; i--)
             if(list.removeFirst() != (i+1))
@@ -141,21 +70,22 @@ public class prog2driver {
             list.addFirst(array[i]);
         
         int mark = 1000;    
-//        for(int i=0; i < STRUCTURE_SIZE; i++) { 
-//            if(i==mark) {
-//                System.out.println( (mark/500) + "% completed");           
-//                mark += 1000;
-//                }
-//            if(!list.remove(scrambled_array[i]))
-//                System.out.println("Failure in remove, returned false");
-//            if(list.contains(scrambled_array[i]))                             
-//                System.out.println(
-//                "Failure in contains, found an element that was removed.");        
-//            }
+        for(int i=0; i < STRUCTURE_SIZE; i++) { 
+            if(i==mark) {
+                System.out.println( (mark/500) + "% completed");           
+                mark += 1000;
+                }
+            if(list.remove(scrambled_array[i]) == null) {
+            //if(list.remove(scrambled_array[i]) ==  null && list.size() != 0)
+                System.out.println("Failure in remove, returned false");
+            }
+            if(list.contains(scrambled_array[i]))                             
+                System.out.println(
+                "Failure in contains, found an element that was removed.");        
+            }
             
         // check handling of empty state, no exception should be thrown
-        // nor anything printed to screen  
-        list.size();
+        // nor anything printed to screen            
         if(list.removeFirst() != null)
             System.out.println("ERROR, removed from empty list"); 
             
@@ -186,11 +116,12 @@ public class prog2driver {
         // should print 1 2 3 4 .. 10    
         for(Integer i : list)
             System.out.print(i + "  ");
-        System.out.println();  */                                      
+        System.out.println();                                          
     }
     
     public static void main(String [] args) { 
-    	prog2driver tester = new prog2driver();
+        LinkedListTester tester = new LinkedListTester();
         tester.runTests();
     }
 }
+
