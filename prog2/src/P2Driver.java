@@ -4,11 +4,15 @@ public class P2Driver
 {
 	private LinearListADT<String> list;
 	private LinearListADT<Integer> list2;
+	private Queue<String> q1;
+	private Stack<String> s1;
 	
 	public P2Driver()
 	{
 		list = new LinearList<String>();
 		list2 = new LinearList<Integer>();
+		q1 = new Queue<String>(); 
+		s1 = new Stack<String>(); 
 		runTests();
 	}
 	
@@ -84,6 +88,31 @@ public class P2Driver
 		System.out.println("REMOVED FIRST ELEMENT");		
 		for (Integer i : list2)
 			System.out.println(i);
+		
+		//Karls Queue/Stack Section
+		System.out.println("--- Queue ---");
+		int sizeOfQ = 10;
+		for (int i = 0; i < sizeOfQ; i++) {
+			q1.enqueue("String:" + i);
+		}
+		System.out.println("Size: " + q1.size());
+		for (String i : q1) {
+			System.out.println(i);
+		}
+		System.out.println("--- Stack ---");
+		int sizeOfS = 10;
+		for (int i = 0; i < sizeOfS; i++) {
+			s1.push("String:" + i);
+		}
+		System.out.println("Size: " + s1.size());
+		for (String i : s1) {
+			System.out.println(i);
+		}
+		s1.remove("String:10");
+		for (String i : s1) {
+			System.out.println(i);
+		}
+		
 	}
 	
 	public static void main(String[] args)
