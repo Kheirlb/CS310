@@ -194,3 +194,34 @@ public class prog2driver {
         tester.runTests();
     }
 }
+/*
+public static int[] insertionSort(int array[]) {
+int [] n = array;
+	 int in, out, temp;
+	 for(out = 1; out < n.length; out++) {
+		 temp = n[out];
+		 in = out;
+		 while(in > 0 && n[in-1] >= temp) {
+			 n[in] = n[in-1];
+			 in--;
+		 }
+		 n[in] = temp;
+	 }
+	 return n;
+}
+
+public static int[] insertionSort(int array[]) {
+int [] n = array;
+	 int in, out, temp;
+	 for(out = 1; out < n.length; out++) {
+		 temp = n[out];
+		 in = out;
+		 while(in > 0 && n[in-1] >= temp) {
+			 n[in] = n[in-1];
+			 in--;
+		 }
+		 n[in] = temp;
+	 }
+	 return n;
+}
+*/
