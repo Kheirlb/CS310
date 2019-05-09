@@ -74,7 +74,7 @@ public class Hashtable<K extends Comparable<K>,V> implements DictionaryADT<K,V> 
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		HashElement<K,V> he = new HashElement(key, value);
 		int hashval = myHash(key.hashCode());
-		list[hashval].addFirst(he);
+		list[hashval].addLast(he);
 		//System.out.println("hashval: " + hashval);
 		currentSize++;
 		modCount++;
@@ -90,7 +90,7 @@ public class Hashtable<K extends Comparable<K>,V> implements DictionaryADT<K,V> 
 			return false;
 		}
 		int hashval = myHash(key.hashCode());
-		list[hashval].removeFirst();
+		list[hashval].remove(new HashElement<K,V>(key, null));
 		currentSize--;
 		modCount++;
 		return true;

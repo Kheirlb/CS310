@@ -47,7 +47,7 @@ public class hw4 {
 		System.out.println("Elapsed Time: " + (double)elapsedTime/1000000 + " milli seconds");
 		
 		System.out.println("\nRemove:");
-        previousTime = System.nanoTime();
+        previousTime = System.currentTimeMillis();
 		for (int i = 0; i < desired; i++) {
 //			Array.removeLast();
 //			Array.removeFirst();
@@ -59,7 +59,7 @@ public class hw4 {
 //			JavaLinked.removeFirst();
 			Queue.remove();
 		}
-		elapsedTime = System.nanoTime() - previousTime;
+		elapsedTime = System.currentTimeMillis() - previousTime;
 		System.out.println("Elapsed Time: " + elapsedTime + " nano seconds");
 		System.out.println("Elapsed Time: " + elapsedTime/1000 + " micro seconds");
 		System.out.println("Elapsed Time: " + (double)elapsedTime/1000000 + " milli seconds");

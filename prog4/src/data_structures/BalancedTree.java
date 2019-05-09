@@ -13,7 +13,11 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class BalancedTree<K extends Comparable<K>,V> implements DictionaryADT<K,V> {
-	private TreeMap<K, V> map = new TreeMap<>();
+	private TreeMap<K, V> map;
+	
+	public BalancedTree() {
+		map = new TreeMap<>();
+	}
 	
 	@Override
 	//returns true if it contains that key

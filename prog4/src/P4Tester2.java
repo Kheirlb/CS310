@@ -4,8 +4,11 @@ import data_structures.*;
 
 public class P4Tester2 {
 	private DictionaryADT<Integer,Integer> HASH;
+	private DictionaryADT<Integer,Integer> HASH2;
 	private DictionaryADT<Integer,Integer> BST;
+	private DictionaryADT<String,Integer> BST2;
 	private DictionaryADT<Integer,Integer> BT;
+	private DictionaryADT<String,Integer> BT2;
 	
 	public P4Tester2() {
 		System.out.println("Creating Structures");
@@ -136,6 +139,90 @@ public class P4Tester2 {
 		while(BTIterator1.hasNext()) {
 			System.out.println(BTIterator1.next());
 		}
+		
+		System.out.println("\n---Large Value Tests---\n");
+		System.out.println("Creating Large Structures");
+		int maxNum = 1000000;
+		HASH2 = new Hashtable<>(1000000);
+		BST2 = new BinarySearchTree<>();
+		BT2 = new BalancedTree<>();
+		
+		long previousTime;
+		long elapsedTime;
+		
+		System.out.println("------------------------HASH-------------------------");
+		System.out.println("Adding elements to dictionary");
+        previousTime = System.currentTimeMillis();
+		for (int i = 0; i < maxNum; i++) {
+			HASH2.add(i, i+1);
+		}
+		elapsedTime = System.currentTimeMillis() - previousTime;
+		System.out.println("Time for insertion of 1000000 elements: " + elapsedTime);
+		System.out.println("Now doing lookups");
+        previousTime = System.currentTimeMillis();
+		for (int i = 0; i < maxNum; i++) {
+			HASH2.getValue(i);
+		}
+		elapsedTime = System.currentTimeMillis() - previousTime;
+		System.out.println("Time for getValue of 1000000 elements: " + elapsedTime);
+		System.out.println("Now Doing deletion");
+        previousTime = System.currentTimeMillis();
+		for (int i = 0; i < maxNum; i++) {
+			HASH2.delete(i);
+		}
+		elapsedTime = System.currentTimeMillis() - previousTime;
+		System.out.println("Time for delete of 1000000 elements: " + elapsedTime);
+		System.out.println("Size of HASH2: " + HASH2.size()); //should be zero
+		
+		System.out.println("------------------------BST-------------------------");
+		System.out.println("Adding elements to dictionary");
+        previousTime = System.currentTimeMillis();
+		for (int i = 0; i < maxNum; i++) {
+			BST2.add("a" + Integer.toString(i), i);
+		}
+		elapsedTime = System.currentTimeMillis() - previousTime;
+		System.out.println("Time for insertion of 1000000 elements: " + elapsedTime);
+		System.out.println("Now doing lookups");
+        previousTime = System.currentTimeMillis();
+		for (int i = 0; i < maxNum; i++) {
+			BST2.getValue("a" + Integer.toString(i));
+		}
+		elapsedTime = System.currentTimeMillis() - previousTime;
+		System.out.println("Time for getValue of 1000000 elements: " + elapsedTime);
+		System.out.println("Now Doing deletion");
+        previousTime = System.currentTimeMillis();
+		for (int i = 0; i < maxNum; i++) {
+			BST2.delete("a" + Integer.toString(i));
+		}
+		elapsedTime = System.currentTimeMillis() - previousTime;
+		System.out.println("Time for delete of 1000000 elements: " + elapsedTime);
+		System.out.println("Size of BST2: " + BST2.size()); //should be zero
+		
+		System.out.println("------------------------BT-------------------------");
+		System.out.println("Adding elements to dictionary");
+        previousTime = System.currentTimeMillis();
+		for (int i = 0; i < maxNum; i++) {
+			BT2.add("a" + Integer.toString(i), i);
+		}
+		elapsedTime = System.currentTimeMillis() - previousTime;
+		System.out.println("Time for insertion of 1000000 elements: " + elapsedTime);
+		System.out.println("Now doing lookups");
+        previousTime = System.currentTimeMillis();
+		for (int i = 0; i < maxNum; i++) {
+			BT2.getValue("a" + Integer.toString(i));
+		}
+		elapsedTime = System.currentTimeMillis() - previousTime;
+		System.out.println("Time for getValue of 1000000 elements: " + elapsedTime);
+		System.out.println("Now Doing deletion");
+        previousTime = System.currentTimeMillis();
+		for (int i = 0; i < maxNum; i++) {
+			BT2.delete("a" + Integer.toString(i));
+		}
+		elapsedTime = System.currentTimeMillis() - previousTime;
+		System.out.println("Time for delete of 1000000 elements: " + elapsedTime);
+		System.out.println("Size of BT2: " + BT2.size()); //should be zero
+		
+
 	}
 
 	public static void main(String[] args) {
